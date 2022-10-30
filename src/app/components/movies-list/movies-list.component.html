@@ -1,0 +1,57 @@
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>Movies List</h2>
+  </div>
+
+      <table class="table table-striped" style="text-align: center">
+        <tbody>
+          <tr>
+            <td  style="padding: 15px;">
+              <input type="text" [(ngModel)]="title" placeholder="Title" />
+              <input type="text" [(ngModel)]="director" style="margin-left: 10px" placeholder="Director" />
+              <button (click)="buttonClicked()" style="margin-left: 10px" class="btn btn-success">Add Movie</button>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+
+  <div class="panel-body">
+    <table class="table table-striped" >
+      <thead>
+        <tr>
+          <th>Movie ID</th>
+          <th>Title</th>
+          <th>Director</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movie of movies; index as i;">
+          <td>{{movie.id}}</td>
+          <td>
+            <span *ngIf="editedIndex !== i">{{movie.title}}</span>
+            <input type="text" class="form-control" [(ngModel)]="movie.title" value={{movie.title}} *ngIf="editedIndex === i">
+
+          </td>
+          <td>
+            <span *ngIf="editedIndex !== i">{{movie.director}}</span>
+            <input type="text" class="form-control" [(ngModel)]="movie.director" value={{movie.director}} *ngIf="editedIndex === i">
+
+          </td>
+
+          <td>
+            <button type="button" (click)=updateMethod(i) *ngIf="editedIndex !== i" class="btn btn-info" >Update</button>
+            <button  type="button" (click)=updateValueToDB(movie.id,movie) style="margin-left: 10px" *ngIf="editedIndex === i" class="btn btn-primary">Save</button>
+            <button  type="button" (click)=cancel() style="margin-left: 10px" *ngIf="editedIndex === i" class="btn btn-danger">Cancel</button>
+            <button type="button" (click)="deleteMovie(movie['id'])" style="margin-left: 10px" class="btn btn-danger" *ngIf="editedIndex !== i" >Delete</button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
